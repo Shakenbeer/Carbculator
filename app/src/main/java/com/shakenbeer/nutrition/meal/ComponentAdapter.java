@@ -43,5 +43,6 @@ public class ComponentAdapter extends BindingAdapter<Component> {
                 componentListener.onAmountChanged(holder.getAdapterPosition(), s.toString());
             }
         });
+        holder.binding.executePendingBindings();
     }
 }

@@ -26,5 +26,6 @@ public class DayAdapter extends BindingAdapter<Day> {
     @Override
     public void onBindViewHolder(BindingViewHolder holder, int position) {
         ((ItemDayBinding) holder.binding).setDay(items.get(position));
+        holder.binding.executePendingBindings();
     }
 }

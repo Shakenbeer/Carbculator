@@ -32,5 +32,6 @@ public class MealAdapter extends BindingAdapter<Meal> {
         binding.setMeal(items.get(position));
         binding.deleteMeal.setOnClickListener(v ->
                 mealListener.onDelete(holder.getAdapterPosition(), items.get(holder.getAdapterPosition())));
+        holder.binding.executePendingBindings();
     }
 }

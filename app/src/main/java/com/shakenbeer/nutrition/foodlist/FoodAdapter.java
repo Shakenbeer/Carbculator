@@ -36,5 +36,6 @@ public class FoodAdapter extends BindingAdapter<Food> {
             int adapterPosition = holder.getAdapterPosition();
             foodListener.onDelete(adapterPosition, items.get(adapterPosition));
         });
+        holder.binding.executePendingBindings();
     }
 }
