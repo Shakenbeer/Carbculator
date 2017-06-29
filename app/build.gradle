@@ -26,17 +26,28 @@ android {
     }
 }
 
+ext {
+    supportLibraryVersion = '25.4.0'
+    rxJavaVersion = '2.0.7'
+    rxAndroidVersion = '2.0.1'
+    daggerVersion = '2.10'
+    constraintLayoutVersion = '1.0.2'
+}
+
 dependencies {
     compile files('libs/opencsv-2.4.jar')
 
+    compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    compile "com.android.support:design:${supportLibraryVersion}"
+    compile "com.android.support:support-vector-drawable:${supportLibraryVersion}"
+    compile "com.android.support:cardview-v7:${supportLibraryVersion}"
 
+    compile "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+    compile "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
 
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:support-vector-drawable:25.3.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.0.7'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'com.google.dagger:dagger:2.10'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.10'
+    compile "com.google.dagger:dagger:${daggerVersion}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+
+    compile "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}"
+
 }
