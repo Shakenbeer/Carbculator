@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -9,104 +10,121 @@
             type="com.shakenbeer.nutrition.model.Meal" />
     </data>
 
-    <RelativeLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:paddingBottom="@dimen/margin_tiny"
-        android:paddingLeft="@dimen/margin_medium"
-        android:paddingRight="@dimen/margin_medium"
-        android:paddingTop="@dimen/margin_tiny">
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        app:cardCornerRadius="@dimen/margin_tiny"
+        app:cardElevation="2dp">
 
-        <TextView
-            android:id="@+id/name_text_view"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/eating_caption_background"
-            android:gravity="center"
-            android:paddingBottom="@dimen/margin_tiny"
-            android:text="@{@stringArray/eating_names[meal.number]}"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_medium"
-            android:textStyle="bold"
-            tools:text="Lunch"/>
+            android:paddingBottom="@dimen/margin_tiny">
 
-        <ImageButton
-            android:id="@+id/delete_meal"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/name_text_view"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="@string/delete_meal"
-            android:src="@android:drawable/ic_menu_delete" />
-
-        <LinearLayout
-            android:id="@+id/summary_linear_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/name_text_view"
-            android:layout_toLeftOf="@id/delete_meal"
-            android:layout_toStartOf="@id/delete_meal"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/margin_tiny"
-            android:paddingTop="@dimen/margin_tiny">
+            <TextView
+                android:id="@+id/name_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/eating_caption_background"
+                android:gravity="center"
+                android:paddingBottom="@dimen/margin_tiny"
+                android:paddingTop="@dimen/margin_tiny"
+                android:text="@{@stringArray/eating_names[meal.number]}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Сніданок" />
 
             <TextView
                 android:id="@+id/kcal_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
                 android:text="@{@string/kcal(meal.kcal)}"
                 android:textSize="@dimen/text_size_medium"
-                tools:text="@string/kcal_colon" />
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/pfc_ratio"
+                app:layout_constraintTop_toBottomOf="@+id/name_text_view"
+                tools:text="Kcal: 489" />
 
             <TextView
                 android:id="@+id/pfc_ratio"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="0dp"
                 android:text="@{@string/pfc_ratio(meal.pfcRatio)}"
                 android:textSize="@dimen/text_size_medium"
-                tools:text="@string/pfc_ratio_colon" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/summary_linear_layout"
-            android:layout_toLeftOf="@id/delete_meal"
-            android:layout_toStartOf="@id/delete_meal"
-            android:orientation="horizontal">
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintLeft_toRightOf="@+id/kcal_text_view"
+                app:layout_constraintRight_toLeftOf="@+id/delete_meal"
+                app:layout_constraintTop_toTopOf="@+id/kcal_text_view"
+                tools:text="PFC Ratio: 25/25/50" />
 
             <TextView
                 android:id="@+id/protein_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="30"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="6dp"
                 android:text="@{@string/protein(meal.protein)}"
                 android:textSize="@dimen/text_size_small"
-                tools:text="Білки 15,7" />
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/carbs_text_view"
+                app:layout_constraintTop_toBottomOf="@+id/kcal_text_view"
+                tools:text="Protein: 10" />
 
             <TextView
                 android:id="@+id/fat_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="30"
+                android:layout_marginBottom="0dp"
+                android:layout_marginRight="0dp"
                 android:text="@{@string/fat(meal.fat)}"
                 android:textSize="@dimen/text_size_small"
-                tools:text="Жири: 6,2" />
+                app:layout_constraintBottom_toBottomOf="@+id/carbs_text_view"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@+id/carbs_text_view"
+                app:layout_constraintRight_toLeftOf="@+id/delete_meal"
+                tools:text="Fat: 10" />
 
             <TextView
                 android:id="@+id/carbs_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="40"
                 android:text="@{@string/carbs(meal.carbs)}"
                 android:textSize="@dimen/text_size_small"
-                tools:text="Вуглеводи 104,9" />
-        </LinearLayout>
+                app:layout_constraintBottom_toBottomOf="@+id/protein_text_view"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@+id/protein_text_view"
+                app:layout_constraintRight_toLeftOf="@+id/fat_text_view"
+                tools:text="Carbs: 20" />
 
-    </RelativeLayout>
+            <ImageButton
+                android:id="@+id/delete_meal"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginRight="0dp"
+                android:background="?attr/selectableItemBackground"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/name_text_view"
+                app:srcCompat="@android:drawable/ic_menu_delete"
+                tools:layout_editor_absoluteY="30dp" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
 </layout>

@@ -57,7 +57,6 @@ public class CalendarView extends RecyclerView implements CalendarContract.View,
     private void initUi(Context context) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         setLayoutManager(layoutManager);
-        addItemDecoration(new DividerItemDecoration(context, layoutManager.getOrientation()));
         setAdapter(adapter);
     }
 

@@ -74,8 +74,6 @@ public class DayActivity extends AppCompatActivity implements DayContract.View {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         binding.mealsRecyclerView.setLayoutManager(layoutManager);
-        binding.mealsRecyclerView.addItemDecoration(
-                new DividerItemDecoration(this, layoutManager.getOrientation()));
         binding.mealsRecyclerView.setAdapter(adapter);
         adapter.setItemClickListener((item, position, shared) -> presenter.onMealClick(item));
     }
@@ -107,7 +105,7 @@ public class DayActivity extends AppCompatActivity implements DayContract.View {
 
     @Override
     public void showDay(Day day) {
-        binding.dayView.setDay(day);
+        binding.setDay(day);
         Intent data = new Intent();
         data.putExtra(DAY_EXTRA, day);
         setResult(RESULT_OK, data);

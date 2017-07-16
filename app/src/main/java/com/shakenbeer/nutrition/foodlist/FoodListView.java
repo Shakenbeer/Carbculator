@@ -56,7 +56,6 @@ public class FoodListView extends RecyclerView implements FoodListContract.View,
     private void initUi(Context context) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         setLayoutManager(layoutManager);
-        addItemDecoration(new DividerItemDecoration(context, layoutManager.getOrientation()));
         setAdapter(adapter);
     }
 

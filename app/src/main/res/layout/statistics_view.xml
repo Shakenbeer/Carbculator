@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -7,6 +8,7 @@
             name="stat"
             type="com.shakenbeer.nutrition.model.Statistics" />
     </data>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,192 +19,223 @@
         android:paddingRight="@dimen/margin_medium"
         android:paddingTop="@dimen/margin_medium">
 
-        <TextView
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/stat_captions"
-            android:gravity="center"
-            android:text="@string/total_statistics"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_medium"
-            android:textStyle="bold" />
+            android:layout_marginBottom="@dimen/margin_small"
+            app:cardCornerRadius="@dimen/margin_tiny"
+            app:cardElevation="2dp"
+            app:contentPadding="@dimen/margin_tiny">
 
-        <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/stat_captions"
+                    android:gravity="center"
+                    android:text="@string/total_statistics"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/margin_small">
+
+                    <TextView
+                        style="@style/StatCaption"
+                        android:text="@string/total_days" />
+
+                    <TextView
+                        android:id="@+id/total_days_text_view"
+                        style="@style/StatValue"
+                        android:text="@{String.valueOf(stat.totalDays)}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/margin_small">
+
+                    <TextView
+                        style="@style/StatCaption"
+                        android:text="@string/total_potein" />
+
+                    <TextView
+                        android:id="@+id/total_protein_text_view"
+                        style="@style/StatValue"
+                        android:text='@{String.format("%.1f", stat.totalProtein)}' />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/margin_small">
+
+                    <TextView
+                        style="@style/StatCaption"
+                        android:text="@string/total_fat" />
+
+                    <TextView
+                        android:id="@+id/total_fat_text_view"
+                        style="@style/StatValue"
+                        android:text='@{String.format("%.1f", stat.totalFat)}' />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/margin_small">
+
+                    <TextView
+                        style="@style/StatCaption"
+                        android:text="@string/total_carbs" />
+
+                    <TextView
+                        android:id="@+id/total_carbs_text_view"
+                        style="@style/StatValue"
+                        android:text='@{String.format("%.1f", stat.totalCarbs)}' />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/margin_medium"
+                    android:paddingTop="@dimen/margin_small">
+
+                    <TextView
+                        style="@style/StatCaption"
+                        android:text="@string/total_kcal" />
+
+                    <TextView
+                        android:id="@+id/total_kcal_text_view"
+                        style="@style/StatValue"
+                        android:text='@{String.format("%.1f", stat.totalKcal)}' />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/margin_small">
+            android:layout_marginBottom="@dimen/margin_small"
+            app:cardCornerRadius="@dimen/margin_tiny"
+            app:cardElevation="2dp"
+            app:contentPadding="@dimen/margin_tiny">
 
-            <TextView
-                style="@style/StatCaption"
-                android:text="@string/total_days" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/total_days_text_view"
-                style="@style/StatValue"
-                android:text="@{String.valueOf(stat.totalDays)}" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/stat_captions_2"
+                    android:gravity="center"
+                    android:text="@string/per_day_statistics"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/margin_small">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/margin_small">
 
-            <TextView
-                style="@style/StatCaption"
-                android:text="@string/total_potein" />
+                    <TextView
+                        style="@style/StatCaption"
+                        android:background="@color/stat_captions_2"
+                        android:text="@string/total_potein" />
 
-            <TextView
-                android:id="@+id/total_protein_text_view"
-                style="@style/StatValue"
-                android:text='@{String.format("%.1f", stat.totalProtein)}' />
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/avg_protein_text_view"
+                        style="@style/StatValue"
+                        android:text='@{stat.totalDays == 0 ? "" : String.format("%.1f", stat.totalProtein / stat.totalDays)}' />
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/margin_small">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/margin_small">
 
-            <TextView
-                style="@style/StatCaption"
-                android:text="@string/total_fat" />
+                    <TextView
+                        style="@style/StatCaption"
+                        android:background="@color/stat_captions_2"
+                        android:text="@string/total_fat" />
 
-            <TextView
-                android:id="@+id/total_fat_text_view"
-                style="@style/StatValue"
-                android:text='@{String.format("%.1f", stat.totalFat)}' />
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/avg_fat_text_view"
+                        style="@style/StatValue"
+                        android:text='@{stat.totalDays == 0 ? "" : String.format("%.1f", stat.totalFat / stat.totalDays)}' />
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/margin_small">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/margin_small">
 
-            <TextView
-                style="@style/StatCaption"
-                android:text="@string/total_carbs" />
+                    <TextView
+                        style="@style/StatCaption"
+                        android:background="@color/stat_captions_2"
+                        android:text="@string/total_carbs" />
 
-            <TextView
-                android:id="@+id/total_carbs_text_view"
-                style="@style/StatValue"
-                android:text='@{String.format("%.1f", stat.totalCarbs)}' />
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/avg_carbs_text_view"
+                        style="@style/StatValue"
+                        android:text='@{stat.totalDays == 0 ? "" : String.format("%.1f", stat.totalCarbs / stat.totalDays)}' />
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/margin_medium"
-            android:paddingTop="@dimen/margin_small">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/margin_small">
 
-            <TextView
-                style="@style/StatCaption"
-                android:text="@string/total_kcal" />
+                    <TextView
+                        style="@style/StatCaption"
+                        android:background="@color/stat_captions_2"
+                        android:text="@string/total_kcal" />
 
-            <TextView
-                android:id="@+id/total_kcal_text_view"
-                style="@style/StatValue"
-                android:text='@{String.format("%.1f", stat.totalKcal)}' />
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/avg_kcal_text_view"
+                        style="@style/StatValue"
+                        android:text='@{stat.totalDays == 0 ? "" : String.format("%.1f", stat.totalKcal / stat.totalDays)}' />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/margin_medium"
+                    android:paddingTop="@dimen/margin_small">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/stat_captions_2"
-            android:gravity="center"
-            android:text="@string/per_day_statistics"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_medium"
-            android:textStyle="bold" />
+                    <TextView
+                        style="@style/StatCaption"
+                        android:background="@color/stat_captions_2"
+                        android:text="@string/total_ratio" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/margin_small">
-
-            <TextView
-                style="@style/StatCaption"
-                android:background="@color/stat_captions_2"
-                android:text="@string/total_potein" />
-
-            <TextView
-                android:id="@+id/avg_protein_text_view"
-                style="@style/StatValue"
-                android:text='@{stat.totalDays == 0 ? "" : String.format("%.1f", stat.totalProtein / stat.totalDays)}' />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/margin_small">
-
-            <TextView
-                style="@style/StatCaption"
-                android:background="@color/stat_captions_2"
-                android:text="@string/total_fat" />
-
-            <TextView
-                android:id="@+id/avg_fat_text_view"
-                style="@style/StatValue"
-                android:text='@{stat.totalDays == 0 ? "" : String.format("%.1f", stat.totalFat / stat.totalDays)}' />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/margin_small">
-
-            <TextView
-                style="@style/StatCaption"
-                android:background="@color/stat_captions_2"
-                android:text="@string/total_carbs" />
-
-            <TextView
-                android:id="@+id/avg_carbs_text_view"
-                style="@style/StatValue"
-                android:text='@{stat.totalDays == 0 ? "" : String.format("%.1f", stat.totalCarbs / stat.totalDays)}' />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/margin_small">
-
-            <TextView
-                style="@style/StatCaption"
-                android:background="@color/stat_captions_2"
-                android:text="@string/total_kcal" />
-
-            <TextView
-                android:id="@+id/avg_kcal_text_view"
-                style="@style/StatValue"
-                android:text='@{stat.totalDays == 0 ? "" : String.format("%.1f", stat.totalKcal / stat.totalDays)}' />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/margin_medium"
-            android:paddingTop="@dimen/margin_small">
-
-            <TextView
-                style="@style/StatCaption"
-                android:background="@color/stat_captions_2"
-                android:text="@string/total_ratio" />
-
-            <TextView
-                android:id="@+id/avg_ratio_text_view"
-                style="@style/StatValue" />
-        </LinearLayout>
-
+                    <TextView
+                        android:id="@+id/avg_ratio_text_view"
+                        style="@style/StatValue" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 </layout>
