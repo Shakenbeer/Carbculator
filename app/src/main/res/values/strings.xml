@@ -81,4 +81,7 @@
     <string name="permission_button_deny">Deny</string>
     <string name="write_external_storage_request_title">Write files</string>
     <string name="write_external_storage_request_rationale">We need your permission to write files to your device.</string>
+
+
+    <string name="find_online">Find online</string>
 </resources>

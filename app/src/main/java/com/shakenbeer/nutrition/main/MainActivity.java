@@ -154,16 +154,19 @@ public class MainActivity extends AppCompatActivity {
     private void updateMenu() {
         switch (currentPage) {
             case CALENDAR:
+                hideOption(R.id.find_online);
                 showOption(R.id.add);
                 hideOption(R.id.action_import_from_csv);
                 showOption(R.id.action_export_to_csv);
                 break;
             case FOOD_LIST:
+                showOption(R.id.find_online);
                 showOption(R.id.add);
                 showOption(R.id.action_import_from_csv);
                 showOption(R.id.action_export_to_csv);
                 break;
             case STATISTICS:
+                hideOption(R.id.find_online);
                 hideOption(R.id.add);
                 hideOption(R.id.action_import_from_csv);
                 hideOption(R.id.action_export_to_csv);
