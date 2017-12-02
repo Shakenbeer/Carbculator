@@ -12,4 +12,6 @@
     <color name="food_caption_background">@color/forest_green</color>
     <color name="stat_captions">@color/gray</color>
     <color name="stat_captions_2">@color/hot_pink</color>
+
+    <color name="black_alpha_60">#a0000000</color>
 </resources>

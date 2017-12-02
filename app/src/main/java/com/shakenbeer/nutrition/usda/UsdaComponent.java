@@ -8,5 +8,5 @@ import dagger.Component;
 @FeatureScope
 @Component(dependencies = ApplicationComponent.class, modules = UsdaModule.class)
 public interface UsdaComponent {
-    void inject(UsdaActivity mealActivity);
+    void inject(UsdaActivity usdaActivity);
 }

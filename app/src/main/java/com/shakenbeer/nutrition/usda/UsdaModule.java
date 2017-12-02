@@ -12,17 +12,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class UsdaModule {
 
-    @Provides
-    @Singleton
-    UsdaService provideUsdaService() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.nal.usda.gov/ndb/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        return retrofit.create(UsdaService.class);
-    }
-
     @FeatureScope
     @Provides
     UsdaContract.Presenter provideUsdaPresenter(UsdaService usdaService) {

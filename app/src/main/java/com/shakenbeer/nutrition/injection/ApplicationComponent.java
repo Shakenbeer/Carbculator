@@ -2,6 +2,7 @@ package com.shakenbeer.nutrition.injection;
 
 import com.shakenbeer.nutrition.data.NutritionLab2;
 import com.shakenbeer.nutrition.model.Storage;
+import com.shakenbeer.nutrition.usda.UsdaService;
 
 import javax.inject.Singleton;
 
@@ -15,4 +16,6 @@ public interface ApplicationComponent {
     Storage storage();
 
     NutritionLab2 nutritionLab2();
+
+    UsdaService usdaService();
 }

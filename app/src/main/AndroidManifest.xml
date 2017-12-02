@@ -35,6 +35,8 @@
             android:name=".food.FoodActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".usda.UsdaActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

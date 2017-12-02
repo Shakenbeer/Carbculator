@@ -32,6 +32,7 @@ import com.shakenbeer.nutrition.model.Food;
 import com.shakenbeer.nutrition.model.Meal;
 import com.shakenbeer.nutrition.model.NutritionLab;
 import com.shakenbeer.nutrition.stat.StatisticsView;
+import com.shakenbeer.nutrition.usda.UsdaActivity;
 
 import java.io.File;
 import java.io.FileReader;
@@ -147,6 +148,10 @@ public class MainActivity extends AppCompatActivity {
                     importFoodFromCsv();
                 }
             }
+            return true;
+        }
+        if (item.getItemId() == R.id.find_online) {
+            startActivity(new Intent(this, UsdaActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
