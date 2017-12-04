@@ -278,7 +278,7 @@ public class DbStorage extends SQLiteOpenHelper implements Storage {
 
     @Override
     public Cursor queryUsdaFood(String ndbno) {
-        String where = FoodTable.COLUMN_DELETED + " = 0 and " + FoodTable.COLUMN_NDBNO + " = " + ndbno;
+        String where = FoodTable.COLUMN_DELETED + " = 0 and " + FoodTable.COLUMN_NDBNO + " = '" + ndbno +"'";
         return getReadableDatabase().query(FoodTable.TABLE_NAME, null, where,
                 null, null, null, FoodTable.COLUMN_NAME);
     }
