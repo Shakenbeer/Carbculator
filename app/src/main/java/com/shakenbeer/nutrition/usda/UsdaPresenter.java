@@ -1,6 +1,7 @@
 package com.shakenbeer.nutrition.usda;
 
 
+import com.shakenbeer.nutrition.data.NutritionLab2;
 import com.shakenbeer.nutrition.model.Food;
 import com.shakenbeer.nutrition.model.Nutrient;
 import com.shakenbeer.nutrition.model.UsdaDataSource;
@@ -14,11 +15,13 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 class UsdaPresenter extends UsdaContract.Presenter {
 
     private final UsdaService usdaService;
+    private final NutritionLab2 nutritionLab2;
     /*
     You may retrieve up to 50 foods per request
     https://ndb.nal.usda.gov/ndb/doc/apilist/API-FOOD-REPORTV2.md
@@ -33,8 +36,9 @@ class UsdaPresenter extends UsdaContract.Presenter {
     private UsdaDataSource actualSource;
 
 
-    public UsdaPresenter(UsdaService usdaService) {
+    public UsdaPresenter(UsdaService usdaService, NutritionLab2 nutritionLab2) {
         this.usdaService = usdaService;
+        this.nutritionLab2 = nutritionLab2;
     }
 
     @Override
@@ -84,7 +88,16 @@ class UsdaPresenter extends UsdaContract.Presenter {
 
     @Override
     void onFoodClick(Food food) {
-
+        nutritionLab2.getUsdaFoodRx(food.getNdbno())
+                .flatMap(food1 -> {
+                    if (food1.getId() > 0) {
+                        food.setId(food1.getId());
+                    }
+                    return nutritionLab2.saveFoodRx(food);
+                }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(foodId -> getMvpView().showPreviousUi(foodId),
+                throwable -> getMvpView().showError(throwable.getMessage()));
     }
 
     private Single<List<Food>> obtainFoods(String query, String source) {
@@ -113,6 +126,7 @@ class UsdaPresenter extends UsdaContract.Presenter {
         result.setName(usdaFood.getDesc().getName());
         result.setUnit(100);
         result.setUnitName("grams");
+        result.setNdbno(usdaFood.getDesc().getNdbno());
         for (Nutrient nutrient : usdaFood.getNutrients()) {
             if (nutrient.isEnergy()) {
                 result.setKcalPerUnit(Float.valueOf(nutrient.getValue()));

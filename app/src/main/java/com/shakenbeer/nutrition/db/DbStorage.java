@@ -29,7 +29,7 @@ import com.shakenbeer.nutrition.model.Storage;
  */
 public class DbStorage extends SQLiteOpenHelper implements Storage {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "nutrition.db";
 
     static final String _ID = "_id";
@@ -44,7 +44,7 @@ public class DbStorage extends SQLiteOpenHelper implements Storage {
             + " INTEGER PRIMARY KEY AUTOINCREMENT, " + FoodTable.COLUMN_NAME + " TEXT, " + FoodTable.COLUMN_PROTEIN
             + " REAL, " + FoodTable.COLUMN_CARBS + " REAL, " + FoodTable.COLUMN_FAT + " REAL, " + FoodTable.COLUMN_KCAL
             + " REAL, " + FoodTable.COLUMN_UNIT + " INTEGER DEFAULT 100, " + FoodTable.COLUMN_DELETED
-            + " INTEGER DEFAULT 0, " + FoodTable.COLUMN_UNIT_NAME + " TEXT)";
+            + " INTEGER DEFAULT 0, " + FoodTable.COLUMN_UNIT_NAME + " TEXT, " + FoodTable.COLUMN_NDBNO + " TEXT)";
 
     private static final String CREATE_TABLE_EATING = "CREATE TABLE " + EatingTable.TABLE_NAME + " (" + EatingTable._ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, " + EatingTable.COLUMN_NUMBER + " INTEGER, " + EatingTable.COLUMN_DATE
@@ -64,6 +64,9 @@ public class DbStorage extends SQLiteOpenHelper implements Storage {
 
     private static final String JOIN_COMP_FOOD_TABLES = ComponentTable.TABLE_NAME + " LEFT OUTER JOIN "
             + FoodTable.TABLE_NAME + " ON " + FoodTable.FULL_ID + " = " + ComponentTable.COLUMN_FOOD_ID;
+
+    private static final String UPDATE_TABLE_FOOD = "ALTER TABLE " + FoodTable.TABLE_NAME + " ADD COLUMN "
+            + FoodTable.COLUMN_NDBNO + " TEXT";
 
     public DbStorage(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -89,6 +92,9 @@ public class DbStorage extends SQLiteOpenHelper implements Storage {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion == 1 && newVersion == 2) {
+            db.execSQL(UPDATE_TABLE_FOOD);
+        }
     }
 
     @Override
@@ -271,6 +277,13 @@ public class DbStorage extends SQLiteOpenHelper implements Storage {
     }
 
     @Override
+    public Cursor queryUsdaFood(String ndbno) {
+        String where = FoodTable.COLUMN_DELETED + " = 0 and " + FoodTable.COLUMN_NDBNO + " = " + ndbno;
+        return getReadableDatabase().query(FoodTable.TABLE_NAME, null, where,
+                null, null, null, FoodTable.COLUMN_NAME);
+    }
+
+    @Override
     public long insertComponent(Component component, long eatingId) {
         ContentValues values = setComponentsValues(component, eatingId);
         return getWritableDatabase().insert(ComponentTable.TABLE_NAME, null, values);
@@ -303,6 +316,7 @@ public class DbStorage extends SQLiteOpenHelper implements Storage {
         values.put(FoodTable.COLUMN_KCAL, food.getKcalPerUnit());
         values.put(FoodTable.COLUMN_UNIT, food.getUnit());
         values.put(FoodTable.COLUMN_UNIT_NAME, food.getUnitName());
+        values.put(FoodTable.COLUMN_NDBNO, food.getNdbno());
         return values;
     }
 

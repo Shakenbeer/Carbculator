@@ -17,6 +17,7 @@ public interface FoodListContract {
         void removeFood(int position, Food food);
         void showFoodUpdated(Food food, int position);
         void showNewFood(Food food);
+        void showUsdaFoodsUi();
     }
 
     abstract class Presenter extends BasePresenter<View> {

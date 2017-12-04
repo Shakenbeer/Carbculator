@@ -51,4 +51,6 @@ public interface Storage {
     Cursor queryFoods(int page, int offset);
 
     Cursor queryMeal(long id);
+
+    Cursor queryUsdaFood(String ndbno);
 }

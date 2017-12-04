@@ -146,6 +146,16 @@ public class NutritionLab2 {
         }
     }
 
+    public Single<Food> getUsdaFoodRx(String ndbno) {
+        Cursor cursor = storage.queryUsdaFood(ndbno);
+        DataCursor<Food> foodCursor = new DataCursor<>(cursor, new DbFoodGetter());
+        if (foodCursor.moveToFirst()) {
+            return Single.just(foodCursor.get());
+        } else {
+            return Single.just(new Food());
+        }
+    }
+
     public Single<List<Food>> getFoodsRx(int page, int offset) {
         return Single.just(getFoods(page, offset));
     }

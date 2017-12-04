@@ -16,6 +16,7 @@ public interface UsdaContract {
         void showFoods(List<Food> foods);
         void clearFoods();
         void showError(String message);
+        void showPreviousUi(long foodId);
     }
 
     abstract class Presenter extends BasePresenter<View> {

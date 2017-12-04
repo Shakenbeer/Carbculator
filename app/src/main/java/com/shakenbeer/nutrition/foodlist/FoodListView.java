@@ -12,6 +12,7 @@ import com.shakenbeer.nutrition.CarbculatorApplication;
 import com.shakenbeer.nutrition.food.FoodActivity;
 import com.shakenbeer.nutrition.main.MainActivity;
 import com.shakenbeer.nutrition.model.Food;
+import com.shakenbeer.nutrition.usda.UsdaActivity;
 import com.shakenbeer.nutrition.util.ui.EndlessRecyclerViewScrollListener;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class FoodListView extends RecyclerView implements FoodListContract.View,
 
     private static final int NEW_FOOD_REQUEST_CODE = 3844;
     private static final int EXISTING_FOOD_REQUEST_CODE = 7762;
+    private static final int USDA_FOODS_REQUEST_CODE = 2511;
 
     @SuppressWarnings("WeakerAccess")
     @Inject
@@ -119,6 +121,11 @@ public class FoodListView extends RecyclerView implements FoodListContract.View,
         adapter.addItem(food);
     }
 
+    @Override
+    public void showUsdaFoodsUi() {
+        UsdaActivity.startForResult(getActivity(), USDA_FOODS_REQUEST_CODE);
+    }
+
 
     @Override
     public Activity getActivity() {
@@ -136,6 +143,13 @@ public class FoodListView extends RecyclerView implements FoodListContract.View,
 
         if (requestCode == EXISTING_FOOD_REQUEST_CODE && resultCode == RESULT_OK) {
             long foodId = data.getLongExtra(FoodActivity.FOOD_ID_EXTRA, 0);
+            if (foodId > 0) {
+                presenter.onFoodUpdated(foodId, adapter.getItems());
+            }
+        }
+
+        if (requestCode == USDA_FOODS_REQUEST_CODE && resultCode == RESULT_OK) {
+            long foodId = data.getLongExtra(UsdaActivity.FOOD_ID_EXTRA, 0);
             if (foodId > 0) {
                 presenter.onFoodUpdated(foodId, adapter.getItems());
             }

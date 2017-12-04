@@ -151,7 +151,8 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.find_online) {
-            startActivity(new Intent(this, UsdaActivity.class));
+            ((FoodListContract.View) callbacks).showUsdaFoodsUi();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

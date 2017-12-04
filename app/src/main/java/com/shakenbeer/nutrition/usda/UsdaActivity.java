@@ -1,5 +1,7 @@
 package com.shakenbeer.nutrition.usda;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,13 +9,16 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.shakenbeer.nutrition.CarbculatorApplication;
 import com.shakenbeer.nutrition.R;
 import com.shakenbeer.nutrition.databinding.ActivityUsdaBinding;
+import com.shakenbeer.nutrition.food.FoodActivity;
 import com.shakenbeer.nutrition.model.Food;
 import com.shakenbeer.nutrition.model.UsdaDataSource;
+import com.shakenbeer.nutrition.util.ui.BindingAdapter;
 import com.shakenbeer.nutrition.util.ui.EndlessRecyclerViewScrollListener;
 
 import java.util.List;
@@ -26,7 +31,7 @@ import javax.inject.Inject;
 
 public class UsdaActivity extends AppCompatActivity implements UsdaContract.View {
 
-
+    public static final String FOOD_ID_EXTRA = "com.shakenbeer.nutrition.usda.foodId";
     @SuppressWarnings("WeakerAccess")
     @Inject
     UsdaContract.Presenter presenter;
@@ -36,6 +41,11 @@ public class UsdaActivity extends AppCompatActivity implements UsdaContract.View
     private ActivityUsdaBinding binding;
     private AlertDialog loadingDialog;
     private EndlessRecyclerViewScrollListener scrollListener;
+
+    public static void startForResult(Activity activity, int requestCode) {
+        Intent starter = new Intent(activity, UsdaActivity.class);
+        activity.startActivityForResult(starter, requestCode);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +61,13 @@ public class UsdaActivity extends AppCompatActivity implements UsdaContract.View
         presenter.detachView();
         super.onDestroy();
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
 
     private void injectDependencies() {
         DaggerUsdaComponent.builder()
@@ -82,6 +99,7 @@ public class UsdaActivity extends AppCompatActivity implements UsdaContract.View
         };
         binding.foodsRecyclerVew.addOnScrollListener(scrollListener);
         binding.foodsRecyclerVew.setAdapter(adapter);
+        adapter.setItemClickListener((item, position, shared) -> presenter.onFoodClick(item));
     }
 
     private void newSearch() {
@@ -129,5 +147,13 @@ public class UsdaActivity extends AppCompatActivity implements UsdaContract.View
     @Override
     public void showError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showPreviousUi(long foodId) {
+        Intent intent = new Intent();
+        intent.putExtra(FOOD_ID_EXTRA, foodId);
+        setResult(RESULT_OK, intent);
+        onBackPressed();
     }
 }

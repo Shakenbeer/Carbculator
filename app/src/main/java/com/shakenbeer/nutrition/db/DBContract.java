@@ -21,6 +21,7 @@ final class DBContract {
         static final String COLUMN_UNIT = "unit";
         static final String COLUMN_DELETED = "deleted";
         static final String COLUMN_UNIT_NAME = "unit_name";
+        static final String COLUMN_NDBNO = "ndbno";
         static final String FULL_ID = TABLE_NAME + "." + _ID;
     }
 

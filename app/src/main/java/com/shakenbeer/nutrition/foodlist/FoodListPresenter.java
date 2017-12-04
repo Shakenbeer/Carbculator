@@ -77,8 +77,10 @@ class FoodListPresenter extends FoodListContract.Presenter {
         for (int i = 0; i < foods.size(); i++) {
             if (food.getId() == foods.get(i).getId()) {
                 getMvpView().showFoodUpdated(food, i);
+                return;
             }
         }
+        getMvpView().showNewFood(food);
     }
 
     @Override

@@ -26,7 +26,9 @@ public class Food implements Parcelable {
     private int unit;
     
     private String unitName;
-    
+
+    private String ndbno;
+
     @Override
     public int describeContents() {
         return 0;
@@ -42,7 +44,7 @@ public class Food implements Parcelable {
         dest.writeFloat(kcalPerUnit);
         dest.writeInt(unit);
         dest.writeString(unitName);
-        
+        dest.writeString(ndbno);
     }
     
     public static final Parcelable.Creator<Food> CREATOR = new Parcelable.Creator<Food>() {
@@ -66,6 +68,7 @@ public class Food implements Parcelable {
         kcalPerUnit = in.readFloat();
         unit = in.readInt();
         unitName = in.readString();
+        ndbno = in.readString();
     }
     
 
@@ -150,8 +153,13 @@ public class Food implements Parcelable {
 
     public void setUnitName(String unitName) {
         this.unitName = unitName;
-    }   
-    
-    
-    
+    }
+
+    public String getNdbno() {
+        return ndbno;
+    }
+
+    public void setNdbno(String ndbno) {
+        this.ndbno = ndbno;
+    }
 }
