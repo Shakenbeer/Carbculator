@@ -14,7 +14,6 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 class UsdaPresenter extends UsdaContract.Presenter {
@@ -30,6 +29,9 @@ class UsdaPresenter extends UsdaContract.Presenter {
     private boolean lastPage;
 
     private final CompositeDisposable disposables = new CompositeDisposable();
+    private String actualQuery;
+    private UsdaDataSource actualSource;
+
 
     public UsdaPresenter(UsdaService usdaService) {
         this.usdaService = usdaService;
@@ -42,21 +44,38 @@ class UsdaPresenter extends UsdaContract.Presenter {
     }
 
     @Override
-    void searchMoreFoods(String query, UsdaDataSource source) {
+    void searchNewFoods(String query, UsdaDataSource source) {
         if (!isLoading) {
+            actualQuery = query;
+            actualSource = source;
+            offset = 0;
+            lastPage = false;
+            searchMoreFoods();
+        }
+    }
+
+    @Override
+    void searchMoreFoods() {
+        if (!isLoading && !lastPage) {
             disposables.add(
-                    obtainFoods(query, source.getName())
+                    obtainFoods(actualQuery, actualSource.getName())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
                             .doOnSubscribe(disposable -> {
                                 isLoading = true;
                                 getMvpView().showLoading();
                             })
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
                             .doAfterTerminate(() -> {
                                 isLoading = false;
                                 getMvpView().hideLoading();
                             })
-                            .doOnSuccess(foods -> lastPage = (foods.size() < max))
+                            .doOnSuccess(foods -> {
+                                if (offset == 0) {
+                                    getMvpView().clearFoods();
+                                }
+                                offset += max;
+                                lastPage = (foods.size() < max);
+                            })
                             .subscribe(foods -> getMvpView().showFoods(foods),
                                     throwable -> getMvpView().showError(throwable.getMessage()))
             );

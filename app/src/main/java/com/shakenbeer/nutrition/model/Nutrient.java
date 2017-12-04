@@ -11,7 +11,7 @@ public class Nutrient {
 
     public static final String FAT_ID = "204";
 
-    public static final String CARBS_ID = "206";
+    public static final String CARBS_ID = "205";
 
     @SerializedName("nutrient_id")
     private String id;

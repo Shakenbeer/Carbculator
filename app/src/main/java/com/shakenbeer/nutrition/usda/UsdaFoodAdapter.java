@@ -20,13 +20,12 @@ public class UsdaFoodAdapter extends BindingAdapter<Food> {
 
     @Override
     protected ViewDataBinding bind(LayoutInflater inflater, ViewGroup parent, int viewType) {
-        ItemUsdaFoodBinding binding = ItemUsdaFoodBinding.inflate(inflater, parent, false);
-        return binding;
+        return ItemUsdaFoodBinding.inflate(inflater, parent, false);
     }
 
     @Override
     public void onBindViewHolder(final BindingViewHolder holder, int position) {
-        ItemFoodBinding binding = (ItemFoodBinding) holder.binding;
+        ItemUsdaFoodBinding binding = (ItemUsdaFoodBinding) holder.binding;
         binding.setFood(items.get(position));
         holder.binding.executePendingBindings();
     }

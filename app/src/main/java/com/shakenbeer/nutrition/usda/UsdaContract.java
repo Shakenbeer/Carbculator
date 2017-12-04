@@ -14,11 +14,13 @@ public interface UsdaContract {
         void showLoading();
         void hideLoading();
         void showFoods(List<Food> foods);
+        void clearFoods();
         void showError(String message);
     }
 
     abstract class Presenter extends BasePresenter<View> {
-        abstract void searchMoreFoods(String query, UsdaDataSource source);
+        abstract void searchNewFoods(String query, UsdaDataSource source);
+        abstract void searchMoreFoods();
         abstract void onFoodClick(Food food);
     }
 }
