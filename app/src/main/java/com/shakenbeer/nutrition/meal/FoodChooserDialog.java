@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -25,14 +26,9 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author Sviatoslav Melnychenko
- *
  */
 //TODO should be refactored with MVP and PAGINATION and proper Rx SEARCH
 public class FoodChooserDialog extends DialogFragment {
-
-    interface Callbacks {
-        void onItemSelected(Food food);
-    }
 
     private ArrayAdapter<Food> foodArrayAdapter;
     private Callbacks callbacks;
@@ -86,6 +82,12 @@ public class FoodChooserDialog extends DialogFragment {
             }
         });
 
+        Button findOnlineButton = (Button) layout.findViewById(R.id.find_online_button);
+        findOnlineButton.setOnClickListener(v -> {
+            callbacks.onFindOnlineSelected(searchEditText.getText().toString());
+            FoodChooserDialog.this.getDialog().dismiss();
+        });
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setView(layout);
@@ -100,6 +102,12 @@ public class FoodChooserDialog extends DialogFragment {
                 });
 
         return builder.create();
+    }
+
+    interface Callbacks {
+        void onItemSelected(Food food);
+
+        void onFindOnlineSelected(String query);
     }
 
 }

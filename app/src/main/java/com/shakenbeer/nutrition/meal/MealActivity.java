@@ -23,7 +23,9 @@ import com.shakenbeer.nutrition.CarbculatorApplication;
 import com.shakenbeer.nutrition.R;
 import com.shakenbeer.nutrition.databinding.ActivityMealBinding;
 import com.shakenbeer.nutrition.model.Component;
+import com.shakenbeer.nutrition.model.Food;
 import com.shakenbeer.nutrition.model.Meal;
+import com.shakenbeer.nutrition.usda.UsdaActivity;
 
 import java.util.Calendar;
 import java.util.List;
@@ -33,6 +35,7 @@ import javax.inject.Inject;
 public class MealActivity extends AppCompatActivity implements MealContract.View {
 
     private static final String MEAL_EXTRA = "com.shakenbeer.nutrition.meal.mealExtra";
+    private static final int USDA_FOODS_REQUEST_CODE = 9404;
     public static final String MEAL_ID_EXTRA = "com.shakenbeer.nutrition.meal.mealIdExtra";
 
     @SuppressWarnings("WeakerAccess")
@@ -190,13 +193,28 @@ public class MealActivity extends AppCompatActivity implements MealContract.View
     }
 
     private void showFoodChooser(final int position) {
-        FoodChooserDialog.newInstance(food -> {
-            presenter.onComponentFoodSelected(adapter.getItem(position), food);
-            //TODO works because on synchronous calls
-            //should be called from presenter
-            //consider to refactor contract using indexes
-            adapter.notifyItemChanged(position);
+        FoodChooserDialog.newInstance(new FoodChooserDialog.Callbacks() {
+            @Override
+            public void onItemSelected(Food food) {
+                presenter.onComponentFoodSelected(position, adapter.getItem(position), food);
+            }
+
+            @Override
+            public void onFindOnlineSelected(String query) {
+                presenter.onOnlineSearch(position, adapter.getItem(position));
+                UsdaActivity.startForResult(MealActivity.this, USDA_FOODS_REQUEST_CODE);
+            }
         }).show(getSupportFragmentManager(), null);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == USDA_FOODS_REQUEST_CODE && resultCode == RESULT_OK) {
+            long foodId = data.getLongExtra(UsdaActivity.FOOD_ID_EXTRA, 0);
+            if (foodId > 0) {
+                presenter.onOnlineFound(foodId);
+            }
+        }
     }
 
     @Override
@@ -235,6 +253,11 @@ public class MealActivity extends AppCompatActivity implements MealContract.View
             setResult(RESULT_OK, data);
         }
         onBackPressed();
+    }
+
+    @Override
+    public void updateComponent(int position) {
+        adapter.notifyItemChanged(position);
     }
 
 }

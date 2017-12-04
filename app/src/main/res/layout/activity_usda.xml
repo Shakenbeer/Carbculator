@@ -76,14 +76,16 @@
             android:id="@+id/foods_recyclerVew"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
+            android:paddingBottom="8dp"
+            android:clipToPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/common_radioButton" />
+            app:layout_constraintTop_toBottomOf="@+id/common_radioButton"/>
 
     </android.support.constraint.ConstraintLayout>
 

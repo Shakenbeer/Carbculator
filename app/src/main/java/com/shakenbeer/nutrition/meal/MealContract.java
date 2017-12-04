@@ -18,6 +18,7 @@ public interface MealContract {
         void removeComponent(Component component, int index);
         void showError(String message);
         void showPreviousUi(long mealId, boolean changed);
+        void updateComponent(int position);
     }
 
     abstract class Presenter extends BasePresenter<View> {
@@ -28,8 +29,9 @@ public interface MealContract {
         abstract void onMealTypeSelected(int type);
         abstract void onMealDateSelected(int year, int monthOfYear, int dayOfMonth);
         abstract void onMealTimeSelected(int hour, int minutes);
-        abstract void onComponentFoodSelected(Component component, Food food);
+        abstract void onComponentFoodSelected(int pos, Component component, Food food);
         abstract void onComponentAmountChanged(Component component, int amount);
-
+        abstract void onOnlineSearch(int pos, Component component);
+        abstract void onOnlineFound(long foodId);
     }
 }

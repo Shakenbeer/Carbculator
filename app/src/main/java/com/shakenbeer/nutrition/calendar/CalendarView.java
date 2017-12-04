@@ -58,6 +58,9 @@ public class CalendarView extends RecyclerView implements CalendarContract.View,
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         setLayoutManager(layoutManager);
         setAdapter(adapter);
+        setPadding(getPaddingLeft(), getPaddingTop(), getPaddingRight(),
+                (int) (8 * context.getResources().getDisplayMetrics().density));
+        setClipToPadding(false);
     }
 
     private void initListeners() {

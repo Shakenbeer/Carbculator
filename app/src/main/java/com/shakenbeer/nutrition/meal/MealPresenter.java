@@ -22,6 +22,8 @@ class MealPresenter extends MealContract.Presenter {
     private Meal meal;
     private List<Component> components;
     private final List<Component> toDelete = new ArrayList<>();
+    private Component onlineSearchForComponent;
+    private int onlineSearchForPos;
 
     @Inject
     MealPresenter(NutritionLab2 nutritionLab2) {
@@ -109,14 +111,30 @@ class MealPresenter extends MealContract.Presenter {
     }
 
     @Override
-    void onComponentFoodSelected(Component component, Food food) {
+    void onComponentFoodSelected(int pos, Component component, Food food) {
         component.setFoodId(food.getId());
         component.setFoodName(food.getName());
         component.setFoodUnitName(food.getUnitName());
+        getMvpView().updateComponent(pos);
     }
 
     @Override
     void onComponentAmountChanged(Component component, int amount) {
         component.setGrams(amount);
+    }
+
+    @Override
+    void onOnlineSearch(int pos, Component component) {
+        onlineSearchForPos = pos;
+        onlineSearchForComponent = component;
+    }
+
+    @Override
+    void onOnlineFound(long foodId) {
+        nutritionLab2.getFoodRx(foodId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(food -> onComponentFoodSelected(onlineSearchForPos, onlineSearchForComponent, food),
+                        throwable -> getMvpView().showError(throwable.getLocalizedMessage()));
     }
 }
