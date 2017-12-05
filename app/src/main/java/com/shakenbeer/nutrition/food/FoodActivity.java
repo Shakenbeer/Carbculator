@@ -1,7 +1,6 @@
 package com.shakenbeer.nutrition.food;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;

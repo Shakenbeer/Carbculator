@@ -15,7 +15,6 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 class UsdaPresenter extends UsdaContract.Presenter {
@@ -36,7 +35,7 @@ class UsdaPresenter extends UsdaContract.Presenter {
     private UsdaDataSource actualSource;
 
 
-    public UsdaPresenter(UsdaService usdaService, NutritionLab2 nutritionLab2) {
+    UsdaPresenter(UsdaService usdaService, NutritionLab2 nutritionLab2) {
         this.usdaService = usdaService;
         this.nutritionLab2 = nutritionLab2;
     }

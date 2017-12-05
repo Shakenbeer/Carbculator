@@ -15,6 +15,7 @@ public interface CalendarContract {
         void showDayUi(Day day);
         void showError(String message);
         void showNewMealUi();
+        @SuppressWarnings("SameParameterValue")
         void showDayUpdated(Day day, int position, boolean existing);
     }
 

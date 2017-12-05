@@ -56,6 +56,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:text="@{@string/kcal(day.kcal)}"
                     android:textSize="@dimen/text_size_medium"
@@ -70,6 +71,7 @@
                     android:id="@+id/pfc_ratio"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="0dp"
                     android:text="@{@string/pfc_ratio(day.pfcRatio)}"
@@ -85,6 +87,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="6dp"
                     android:text="@{@string/protein(day.protein)}"
                     android:textSize="@dimen/text_size_small"
@@ -99,6 +102,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="0dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:text="@{@string/fat(day.fat)}"
                     android:textSize="@dimen/text_size_small"
@@ -129,7 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:paddingBottom="@dimen/margin_tiny"/>
+            android:paddingBottom="@dimen/margin_tiny" />
 
     </LinearLayout>
 </layout>

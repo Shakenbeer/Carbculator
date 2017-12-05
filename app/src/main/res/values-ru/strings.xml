@@ -2,10 +2,6 @@
 <resources>
 
     <string name="app_name">Carbculator</string>
-    <string name="protein_colon">"Белок: "</string>
-    <string name="carbs_colon">"Углеводы: "</string>
-    <string name="fat_colon">"Жиры: "</string>
-    <string name="kcal_colon">"Ккал: "</string>
     <string name="unit">Единица измерения (100 г, 1 шт. и т.п.)</string>
     <string name="protein_per_unit">Белка на единицу измерения</string>
     <string name="carbs_per_unit">Углеводов на единицу измерения</string>
@@ -31,8 +27,6 @@
         <item>Поздний ужин</item>
         <item>Перекус</item>
     </string-array>
-
-    <string name="pfc_ratio_colon">"БЖУ: "</string>
 
     <string-array name="init_food">
         <item>"INSERT INTO food (food_name, protein, fat, carbs, kcal, unit_name) VALUES ('Рис белый, длиннозернистый', 7.13, 0.66, 80, 365, 'грамм')"</item>

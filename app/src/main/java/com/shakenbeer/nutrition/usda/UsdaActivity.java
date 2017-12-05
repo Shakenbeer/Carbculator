@@ -10,28 +10,20 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shakenbeer.nutrition.CarbculatorApplication;
 import com.shakenbeer.nutrition.R;
 import com.shakenbeer.nutrition.databinding.ActivityUsdaBinding;
-import com.shakenbeer.nutrition.food.FoodActivity;
 import com.shakenbeer.nutrition.model.Food;
 import com.shakenbeer.nutrition.model.UsdaDataSource;
-import com.shakenbeer.nutrition.util.ui.BindingAdapter;
 import com.shakenbeer.nutrition.util.ui.EndlessRecyclerViewScrollListener;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-/**
- * Created by sviatoslav on 12/1/17.
- */
 
 public class UsdaActivity extends AppCompatActivity implements UsdaContract.View {
 

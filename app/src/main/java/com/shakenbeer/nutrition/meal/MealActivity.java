@@ -85,6 +85,7 @@ public class MealActivity extends AppCompatActivity implements MealContract.View
         context.startActivity(starter);
     }
 
+    @SuppressWarnings("SameParameterValue")
     public static void startForResult(Activity activity, Meal meal, int requestCode) {
         Intent starter = new Intent(activity, MealActivity.class);
         starter.putExtra(MEAL_EXTRA, meal);

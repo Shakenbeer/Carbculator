@@ -17,6 +17,7 @@ public interface MealContract {
         void showNewComponent(Component component);
         void removeComponent(Component component, int index);
         void showError(String message);
+        @SuppressWarnings("SameParameterValue")
         void showPreviousUi(long mealId, boolean changed);
         void updateComponent(int position);
     }

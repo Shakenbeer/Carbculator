@@ -50,6 +50,7 @@ public class NutritionLab2 {
         return new DataCursor<>(cursor, new DbFoodGetter());
     }
 
+    @SuppressWarnings("SameParameterValue")
     public Single<List<Day>> getDaysRx(int page, int offset) {
         return Single.just(getDays(page, offset));
     }

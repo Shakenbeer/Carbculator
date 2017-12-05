@@ -7,5 +7,4 @@ interface MvpPresenter<V extends MvpView> {
 
     void detachView();
 
-    void onDestroyed();
 }

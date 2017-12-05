@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class Nutrient {
 
-    public static final String ENERGY_ID = "208";
+    private static final String ENERGY_ID = "208";
 
-    public static final String PROTEIN_ID = "203";
+    private static final String PROTEIN_ID = "203";
 
-    public static final String FAT_ID = "204";
+    private static final String FAT_ID = "204";
 
-    public static final String CARBS_ID = "205";
+    private static final String CARBS_ID = "205";
 
     @SerializedName("nutrient_id")
     private String id;

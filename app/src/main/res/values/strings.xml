@@ -2,10 +2,6 @@
 <resources>
 
     <string name="app_name">Carbculator</string>
-    <string name="protein_colon">"Protein: "</string>
-    <string name="carbs_colon">"Carbs: "</string>
-    <string name="fat_colon">"Fat: "</string>
-    <string name="kcal_colon">"Kcal: "</string>
     <string name="unit">Unit (100 grams, 1 piece etc.)</string>
     <string name="protein_per_unit">Protein per unit</string>
     <string name="carbs_per_unit">Carbs per unit</string>
@@ -31,8 +27,6 @@
         <item>Supper</item>
         <item>Snacks</item>
     </string-array>
-
-    <string name="pfc_ratio_colon">"PFC Ratio: "</string>
 
     <string-array name="init_food">
         <item>"INSERT INTO food (food_name, protein, fat, carbs, kcal, unit_name) VALUES ('Rice, white, long-grain', 7.13, 0.66, 80, 365, 'grams')"</item>

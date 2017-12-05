@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="meal"
             type="com.shakenbeer.nutrition.model.Meal" />
@@ -18,8 +19,9 @@
         android:layout_marginRight="@dimen/margin_small"
         android:layout_marginStart="@dimen/margin_small"
         android:layout_marginTop="@dimen/margin_small"
-        android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         app:cardCornerRadius="@dimen/margin_tiny"
         app:cardElevation="2dp">
 
@@ -50,6 +52,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@{@string/kcal(meal.kcal)}"
                 android:textSize="@dimen/text_size_medium"
@@ -64,6 +67,7 @@
                 android:id="@+id/pfc_ratio"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="0dp"
                 android:layout_marginRight="0dp"
                 android:layout_marginTop="0dp"
                 android:text="@{@string/pfc_ratio(meal.pfcRatio)}"
@@ -79,6 +83,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="6dp"
                 android:text="@{@string/protein(meal.protein)}"
                 android:textSize="@dimen/text_size_small"
@@ -93,6 +98,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="0dp"
+                android:layout_marginEnd="0dp"
                 android:layout_marginRight="0dp"
                 android:text="@{@string/fat(meal.fat)}"
                 android:textSize="@dimen/text_size_small"
@@ -118,8 +124,10 @@
                 android:id="@+id/delete_meal"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:layout_marginEnd="0dp"
                 android:layout_marginRight="0dp"
                 android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/delete_meal"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/name_text_view"
                 app:srcCompat="@android:drawable/ic_menu_delete"

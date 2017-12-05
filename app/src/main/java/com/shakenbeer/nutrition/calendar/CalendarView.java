@@ -1,9 +1,9 @@
 package com.shakenbeer.nutrition.calendar;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
@@ -23,6 +23,7 @@ import javax.inject.Inject;
 
 import static android.app.Activity.RESULT_OK;
 
+@SuppressLint("ViewConstructor")
 public class CalendarView extends RecyclerView implements CalendarContract.View,
         MainActivity.Callbacks {
 

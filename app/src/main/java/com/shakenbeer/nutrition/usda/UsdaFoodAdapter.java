@@ -4,7 +4,6 @@ import android.databinding.ViewDataBinding;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.shakenbeer.nutrition.databinding.ItemFoodBinding;
 import com.shakenbeer.nutrition.databinding.ItemUsdaFoodBinding;
 import com.shakenbeer.nutrition.model.Food;
 import com.shakenbeer.nutrition.util.ui.BindingAdapter;
@@ -14,6 +13,7 @@ import javax.inject.Inject;
 
 public class UsdaFoodAdapter extends BindingAdapter<Food> {
 
+    @SuppressWarnings("WeakerAccess")
     @Inject
     public UsdaFoodAdapter() {
     }

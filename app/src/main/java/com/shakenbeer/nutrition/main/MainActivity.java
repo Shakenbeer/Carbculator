@@ -32,7 +32,6 @@ import com.shakenbeer.nutrition.model.Food;
 import com.shakenbeer.nutrition.model.Meal;
 import com.shakenbeer.nutrition.model.NutritionLab;
 import com.shakenbeer.nutrition.stat.StatisticsView;
-import com.shakenbeer.nutrition.usda.UsdaActivity;
 
 import java.io.File;
 import java.io.FileReader;

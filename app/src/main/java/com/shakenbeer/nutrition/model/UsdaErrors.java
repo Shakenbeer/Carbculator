@@ -4,16 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by sviatoslav on 12/1/17.
- */
 
-public class UsdaErrors {
+class UsdaErrors {
 
     @SerializedName("error")
     private List<UsdaError> errors;
 
-    public List<UsdaError> getErrors() {
+    List<UsdaError> getErrors() {
         return errors;
     }
 }

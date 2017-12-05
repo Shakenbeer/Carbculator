@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +33,7 @@ public class DayActivity extends AppCompatActivity implements DayContract.View {
     MealAdapter adapter;
     private ActivityDayBinding binding;
 
+    @SuppressWarnings("SameParameterValue")
     public static void startForResult(Activity activity, Day day, int requestCode) {
         Intent starter = new Intent(activity, DayActivity.class);
         starter.putExtra(DAY_EXTRA, day);

@@ -9,16 +9,17 @@
         tools:layout_editor_absoluteY="81dp">
 
         <EditText
-            android:imeOptions="actionSearch"
             android:id="@+id/query_editText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="0dp"
             android:ems="10"
             android:hint="@string/for_example_raw_broccoli"
+            android:imeOptions="actionSearch"
             android:inputType="textPersonName"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -81,12 +82,12 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
-            android:paddingBottom="8dp"
             android:clipToPadding="false"
+            android:paddingBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/common_radioButton"/>
+            app:layout_constraintTop_toBottomOf="@+id/common_radioButton" />
 
     </android.support.constraint.ConstraintLayout>
 

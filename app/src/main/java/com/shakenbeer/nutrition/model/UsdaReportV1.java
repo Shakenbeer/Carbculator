@@ -3,7 +3,7 @@ package com.shakenbeer.nutrition.model;
 /**
  * https://ndb.nal.usda.gov/ndb/doc/apilist/API-FOOD-REPORT.md
  */
-public class UsdaReportV1 {
+class UsdaReportV1 {
 
     private String sr;
 

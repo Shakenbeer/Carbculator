@@ -1,10 +1,7 @@
 package com.shakenbeer.nutrition.model;
 
-/**
- * Created by sviatoslav on 12/1/17.
- */
 
-public class UsdaError {
+class UsdaError {
 
     private int status;
 

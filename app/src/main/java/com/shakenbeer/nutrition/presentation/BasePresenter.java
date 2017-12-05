@@ -25,9 +25,4 @@ public abstract class BasePresenter<T extends MvpView> implements MvpPresenter<T
         return mvpView;
     }
 
-    @Override
-    public void onDestroyed() {
-        //
-    }
-
 }
