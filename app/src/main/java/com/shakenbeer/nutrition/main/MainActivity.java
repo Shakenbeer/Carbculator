@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.shakenbeer.nutrition.R;
 import com.shakenbeer.nutrition.calendar.CalendarContract;
 import com.shakenbeer.nutrition.calendar.CalendarView;
@@ -33,6 +34,7 @@ import com.shakenbeer.nutrition.model.Meal;
 import com.shakenbeer.nutrition.model.NutritionLab;
 import com.shakenbeer.nutrition.stat.StatisticsView;
 
+import io.fabric.sdk.android.Fabric;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
         container = (MainContainer) findViewById(R.id.content);

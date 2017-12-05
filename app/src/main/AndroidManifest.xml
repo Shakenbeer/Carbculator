@@ -38,6 +38,9 @@
         <activity android:name=".usda.UsdaActivity"
             android:label="USDA database"
             android:screenOrientation="portrait" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="e547ebd59281ce61b52dc737b1e7c3cdb298eba1" />
     </application>
 
 </manifest>
