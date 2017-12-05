@@ -1,6 +1,7 @@
 package com.shakenbeer.nutrition.usda;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -9,7 +10,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shakenbeer.nutrition.CarbculatorApplication;
@@ -80,6 +84,12 @@ public class UsdaActivity extends AppCompatActivity implements UsdaContract.View
     private void initUi() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        binding.queryEditText.setOnEditorActionListener((textView, i, keyEvent) -> {
+            hideKeyboard();
+            newSearch();
+            return true;
+        });
+
         binding.commonRadioButton.setChecked(true);
         binding.brandedRadioButton.setChecked(false);
         binding.commonRadioButton.setOnCheckedChangeListener((buttonView, isChecked) ->
@@ -87,7 +97,10 @@ public class UsdaActivity extends AppCompatActivity implements UsdaContract.View
         binding.brandedRadioButton.setOnCheckedChangeListener((buttonView, isChecked) ->
                 binding.commonRadioButton.setChecked(!isChecked));
 
-        binding.button.setOnClickListener(v -> newSearch());
+        binding.button.setOnClickListener(v -> {
+            hideKeyboard();
+            newSearch();
+        });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         binding.foodsRecyclerVew.setLayoutManager(linearLayoutManager);
@@ -100,6 +113,11 @@ public class UsdaActivity extends AppCompatActivity implements UsdaContract.View
         binding.foodsRecyclerVew.addOnScrollListener(scrollListener);
         binding.foodsRecyclerVew.setAdapter(adapter);
         adapter.setItemClickListener((item, position, shared) -> presenter.onFoodClick(item));
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binding.getRoot().getWindowToken(), 0);
     }
 
     private void newSearch() {

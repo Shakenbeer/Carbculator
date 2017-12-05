@@ -9,6 +9,7 @@
         tools:layout_editor_absoluteY="81dp">
 
         <EditText
+            android:imeOptions="actionSearch"
             android:id="@+id/query_editText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
