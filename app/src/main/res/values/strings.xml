@@ -77,10 +77,10 @@
     <string name="write_external_storage_request_rationale">We need your permission to write files to your device.</string>
 
 
-    <string name="find_online">Find online</string>
-    <string name="search">Search</string>
-    <string name="for_example_raw_broccoli">For example: raw broccoli</string>
-    <string name="enter_one_or_more_terms">Enter one or more terms</string>
-    <string name="common_products">Common products</string>
-    <string name="branded">Branded</string>
+    <string name="find_online" translatable="false">Find online</string>
+    <string name="search" translatable="false">Search</string>
+    <string name="for_example_raw_broccoli" translatable="false">For example: raw broccoli</string>
+    <string name="enter_one_or_more_terms" translatable="false">Enter one or more terms</string>
+    <string name="common_products" translatable="false">Common products</string>
+    <string name="branded" translatable="false">Branded</string>
 </resources>
