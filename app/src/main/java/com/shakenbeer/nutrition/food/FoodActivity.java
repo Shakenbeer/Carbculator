@@ -148,6 +148,9 @@ public class FoodActivity extends AppCompatActivity implements FoodContract.View
     }
 
     private float parseFloat(CharSequence value) {
+        if (value.equals("")) {
+            return 0f;
+        }
         return value.length() > 0 ? Float.parseFloat(value.toString()) : 0f;
     }
 
