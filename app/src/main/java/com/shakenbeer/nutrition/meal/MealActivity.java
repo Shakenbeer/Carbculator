@@ -49,7 +49,9 @@ public class MealActivity extends AppCompatActivity implements MealContract.View
     private final ComponentListener componentListener = new ComponentListener() {
         @Override
         public void onDelete(int position) {
-            presenter.onRemoveComponent(adapter.getItem(position), position);
+            if (position > -1) {
+                presenter.onRemoveComponent(adapter.getItem(position), position);
+            }
         }
 
         @Override
