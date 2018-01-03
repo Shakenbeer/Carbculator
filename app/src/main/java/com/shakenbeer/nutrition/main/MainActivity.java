@@ -597,8 +597,17 @@ public class MainActivity extends AppCompatActivity {
                                     }
 
                                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                                    setProperMimeType(intent);
-                                    startActivity(intent);
+
+                                    PackageManager packageManager = getPackageManager();
+                                    if (intent.resolveActivity(packageManager) != null) {
+                                        setProperMimeType(intent);
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(MainActivity.this,
+                                                "There is no application for opening such file",
+                                                Toast.LENGTH_SHORT)
+                                                .show();
+                                    }
 
                                     dialog1.cancel();
                                 });
