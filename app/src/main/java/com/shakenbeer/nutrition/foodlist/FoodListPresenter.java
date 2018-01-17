@@ -9,6 +9,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 class FoodListPresenter extends FoodListContract.Presenter {
@@ -17,6 +18,7 @@ class FoodListPresenter extends FoodListContract.Presenter {
     private final NutritionLab2 nutritionLab2;
     private int page = 0;
     private boolean everythingIsHere = false;
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     @Inject
     FoodListPresenter(NutritionLab2 nutritionLab2) {
@@ -24,13 +26,21 @@ class FoodListPresenter extends FoodListContract.Presenter {
     }
 
     @Override
+    public void detachView() {
+        disposables.clear();
+        super.detachView();
+    }
+
+    @Override
     void obtainFoods() {
         if (everythingIsHere) return;
-        nutritionLab2.getFoodsRx(page, OFFSET)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::processFoods, throwable
-                        -> getMvpView().showError(throwable.getLocalizedMessage()));
+        disposables.add(
+                nutritionLab2.getFoodsRx(page, OFFSET)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::processFoods, throwable
+                                -> getMvpView().showError(throwable.getLocalizedMessage()))
+        );
     }
 
     private void processFoods(List<Food> foods) {
@@ -57,20 +67,24 @@ class FoodListPresenter extends FoodListContract.Presenter {
 
     @Override
     void onRemoveFood(int position, Food food) {
-        nutritionLab2.deleteFoodRx(food)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> getMvpView().removeFood(position, food), throwable ->
-                        getMvpView().showError(throwable.getLocalizedMessage()));
+        disposables.add(
+                nutritionLab2.deleteFoodRx(food)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(() -> getMvpView().removeFood(position, food), throwable ->
+                                getMvpView().showError(throwable.getLocalizedMessage()))
+        );
     }
 
     @Override
     void onFoodUpdated(long foodId, List<Food> foods) {
-        nutritionLab2.getFoodRx(foodId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(food -> processFood(food, foods), throwable
-                        -> getMvpView().showError(throwable.getLocalizedMessage()));
+        disposables.add(
+                nutritionLab2.getFoodRx(foodId)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(food -> processFood(food, foods), throwable
+                                -> getMvpView().showError(throwable.getLocalizedMessage()))
+        );
     }
 
     private void processFood(Food food, List<Food> foods) {
@@ -85,10 +99,12 @@ class FoodListPresenter extends FoodListContract.Presenter {
 
     @Override
     void onNewFood(long foodId) {
-        nutritionLab2.getFoodRx(foodId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(food -> getMvpView().showNewFood(food), throwable
-                        -> getMvpView().showError(throwable.getLocalizedMessage()));
+        disposables.add(
+                nutritionLab2.getFoodRx(foodId)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(food -> getMvpView().showNewFood(food), throwable
+                                -> getMvpView().showError(throwable.getLocalizedMessage()))
+        );
     }
 }

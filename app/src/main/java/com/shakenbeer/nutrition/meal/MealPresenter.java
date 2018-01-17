@@ -14,6 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 class MealPresenter extends MealContract.Presenter {
@@ -24,6 +25,7 @@ class MealPresenter extends MealContract.Presenter {
     private final List<Component> toDelete = new ArrayList<>();
     private Component onlineSearchForComponent;
     private int onlineSearchForPos;
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     @Inject
     MealPresenter(NutritionLab2 nutritionLab2) {
@@ -31,16 +33,24 @@ class MealPresenter extends MealContract.Presenter {
     }
 
     @Override
+    public void detachView() {
+        disposables.clear();
+        super.detachView();
+    }
+
+    @Override
     void obtainComponents(Meal meal) {
         getMvpView().showMeal(meal);
         this.meal = meal;
-        nutritionLab2.getComponentsRx(meal)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(components1 -> {
-                    MealPresenter.this.components = components1;
-                    getMvpView().showComponents(components1);
-                }, throwable -> getMvpView().showError(throwable.getLocalizedMessage()));
+        disposables.add(
+                nutritionLab2.getComponentsRx(meal)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(components1 -> {
+                            MealPresenter.this.components = components1;
+                            getMvpView().showComponents(components1);
+                        }, throwable -> getMvpView().showError(throwable.getLocalizedMessage()))
+        );
     }
 
     @Override
@@ -61,14 +71,16 @@ class MealPresenter extends MealContract.Presenter {
 
     @Override
     void onSaveClick() {
-        nutritionLab2
-                .saveMealRx(meal)
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .doOnSuccess(this::saveComponents)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mealId -> getMvpView().showPreviousUi(mealId, true), throwable ->
-                        getMvpView().showError(throwable.getLocalizedMessage()));
+        disposables.add(
+                nutritionLab2
+                        .saveMealRx(meal)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(Schedulers.io())
+                        .doOnSuccess(this::saveComponents)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(mealId -> getMvpView().showPreviousUi(mealId, true), throwable ->
+                                getMvpView().showError(throwable.getLocalizedMessage()))
+        );
     }
 
     private void saveComponents(long mealId) {
@@ -131,10 +143,12 @@ class MealPresenter extends MealContract.Presenter {
 
     @Override
     void onOnlineFound(long foodId) {
-        nutritionLab2.getFoodRx(foodId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(food -> onComponentFoodSelected(onlineSearchForPos, onlineSearchForComponent, food),
-                        throwable -> getMvpView().showError(throwable.getLocalizedMessage()));
+        disposables.add(
+                nutritionLab2.getFoodRx(foodId)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(food -> onComponentFoodSelected(onlineSearchForPos, onlineSearchForComponent, food),
+                                throwable -> getMvpView().showError(throwable.getLocalizedMessage()))
+        );
     }
 }

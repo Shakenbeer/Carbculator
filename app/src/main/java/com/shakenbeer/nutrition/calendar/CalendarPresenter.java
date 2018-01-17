@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 class CalendarPresenter extends CalendarContract.Presenter {
@@ -21,6 +22,7 @@ class CalendarPresenter extends CalendarContract.Presenter {
     private final NutritionLab2 nutritionLab2;
     private int page = 0;
     private boolean everythingIsHere = false;
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     @Inject
     CalendarPresenter(NutritionLab2 nutritionLab2) {
@@ -28,13 +30,21 @@ class CalendarPresenter extends CalendarContract.Presenter {
     }
 
     @Override
+    public void detachView() {
+        disposables.clear();
+        super.detachView();
+    }
+
+    @Override
     void obtainDays() {
         if (everythingIsHere) return;
-        nutritionLab2.getDaysRx(page, OFFSET)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::process, throwable ->
-                        getMvpView().showError(throwable.getLocalizedMessage()));
+        disposables.add(
+                nutritionLab2.getDaysRx(page, OFFSET)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::process, throwable ->
+                                getMvpView().showError(throwable.getLocalizedMessage()))
+        );
     }
 
     private void process(@NonNull List<Day> days) {
@@ -69,10 +79,12 @@ class CalendarPresenter extends CalendarContract.Presenter {
 
     @Override
     void onDayGrow(long mealId, final List<Day> days) {
-        nutritionLab2.getMealRx(mealId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(meal -> processNewMeal(meal, days));
+        disposables.add(
+                nutritionLab2.getMealRx(mealId)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(meal -> processNewMeal(meal, days))
+        );
     }
 
     private void processNewMeal(@NonNull Meal meal, List<Day> days) {
