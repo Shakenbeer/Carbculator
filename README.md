@@ -10,3 +10,8 @@ Carbculator is a very simple nutrition diary. With Carbculator you create your o
 No login or internet connection required.
 
 Spend 10 minutes and fill food list with products, that you eat more often. Though, you can add food even when you filling meal. Note, you can add whole meals, just calculate total food-value.
+
+**Technical details:** 
+* MVP
+* Dagger 2, RxJava 2, Retrofit 2
+* ConstraintLayout
