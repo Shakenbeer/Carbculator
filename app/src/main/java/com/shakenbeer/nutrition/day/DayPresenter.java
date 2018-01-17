@@ -12,6 +12,7 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 class DayPresenter extends DayContract.Presenter {
@@ -19,6 +20,7 @@ class DayPresenter extends DayContract.Presenter {
     private final NutritionLab2 nutritionLab2;
     private Day day;
     private List<Meal> meals;
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     @Inject
     DayPresenter(NutritionLab2 nutritionLab2) {
@@ -26,14 +28,22 @@ class DayPresenter extends DayContract.Presenter {
     }
 
     @Override
+    public void detachView() {
+        disposables.clear();
+        super.detachView();
+    }
+
+    @Override
     void obtainMeals(Day day) {
         getMvpView().showDay(day);
         this.day = day;
-        nutritionLab2.getMealsRx(day)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::processMeals, throwable ->
-                        getMvpView().showError(throwable.getLocalizedMessage()));
+        disposables.add(
+                nutritionLab2.getMealsRx(day)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::processMeals, throwable ->
+                                getMvpView().showError(throwable.getLocalizedMessage()))
+        );
 
     }
 
@@ -75,11 +85,13 @@ class DayPresenter extends DayContract.Presenter {
 
     @Override
     void onMealRemove(Meal meal, int position) {
-        nutritionLab2.deleteMealRx(meal)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> processRemovedMeal(position), throwable ->
-                        getMvpView().showError(throwable.getLocalizedMessage()));
+        disposables.add(
+                nutritionLab2.deleteMealRx(meal)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(() -> processRemovedMeal(position), throwable ->
+                                getMvpView().showError(throwable.getLocalizedMessage()))
+        );
     }
 
     private void processRemovedMeal(int position) {

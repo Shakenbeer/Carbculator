@@ -5,15 +5,23 @@ import com.shakenbeer.nutrition.data.NutritionLab2;
 import com.shakenbeer.nutrition.model.Food;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 class FoodPresenter extends FoodContract.Presenter {
 
     private final NutritionLab2 nutritionLab2;
     private Food food;
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     FoodPresenter(NutritionLab2 nutritionLab2) {
         this.nutritionLab2 = nutritionLab2;
+    }
+
+    @Override
+    public void detachView() {
+        disposables.clear();
+        super.detachView();
     }
 
     @Override
@@ -59,10 +67,12 @@ class FoodPresenter extends FoodContract.Presenter {
 
     @Override
     void onSavePerformed() {
-        nutritionLab2.saveFoodRx(food)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(foodId -> getMvpView().showPreviousUi(foodId), throwable ->
-                        getMvpView().showError(throwable.getLocalizedMessage()));
+        disposables.add(
+                nutritionLab2.saveFoodRx(food)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(foodId -> getMvpView().showPreviousUi(foodId), throwable ->
+                                getMvpView().showError(throwable.getLocalizedMessage()))
+        );
     }
 }

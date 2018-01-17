@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -148,10 +149,11 @@ public class FoodActivity extends AppCompatActivity implements FoodContract.View
     }
 
     private float parseFloat(CharSequence value) {
-        if (value.equals("")) {
+        try {
+            return TextUtils.isEmpty(value) ? Float.parseFloat(value.toString()) : 0f;
+        } catch (NumberFormatException e) {
             return 0f;
         }
-        return value.length() > 0 ? Float.parseFloat(value.toString()) : 0f;
     }
 
     public void onSaveClick(View view) {

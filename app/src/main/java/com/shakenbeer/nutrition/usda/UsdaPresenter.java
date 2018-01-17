@@ -87,16 +87,18 @@ class UsdaPresenter extends UsdaContract.Presenter {
 
     @Override
     void onFoodClick(Food food) {
-        nutritionLab2.getUsdaFoodRx(food.getNdbno())
-                .flatMap(food1 -> {
-                    if (food1.getId() > 0) {
-                        food.setId(food1.getId());
-                    }
-                    return nutritionLab2.saveFoodRx(food);
-                }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(foodId -> getMvpView().showPreviousUi(foodId),
-                throwable -> getMvpView().showError(throwable.getMessage()));
+        disposables.add(
+                nutritionLab2.getUsdaFoodRx(food.getNdbno())
+                        .flatMap(food1 -> {
+                            if (food1.getId() > 0) {
+                                food.setId(food1.getId());
+                            }
+                            return nutritionLab2.saveFoodRx(food);
+                        }).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(foodId -> getMvpView().showPreviousUi(foodId),
+                                throwable -> getMvpView().showError(throwable.getMessage()))
+        );
     }
 
     private Single<List<Food>> obtainFoods(String query, String source) {

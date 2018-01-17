@@ -11,8 +11,10 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -39,6 +41,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
@@ -98,6 +101,15 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         dialog = new ProgressDialog(this);
+
+        if(Build.VERSION.SDK_INT >= 24){
+            try{
+                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                m.invoke(null);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
 
         showCalendarUi();
     }
@@ -597,8 +609,17 @@ public class MainActivity extends AppCompatActivity {
                                     }
 
                                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                                    setProperMimeType(intent);
-                                    startActivity(intent);
+
+                                    PackageManager packageManager = getPackageManager();
+                                    if (intent.resolveActivity(packageManager) != null) {
+                                        setProperMimeType(intent);
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(MainActivity.this,
+                                                "There is no application for opening such file",
+                                                Toast.LENGTH_SHORT)
+                                                .show();
+                                    }
 
                                     dialog1.cancel();
                                 });
