@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.shakenbeer.nutrition"
     android:installLocation="auto"
-    android:versionCode="9"
-    android:versionName="1.6.3">
+    android:versionCode="10"
+    android:versionName="1.6.4">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,7 +17,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".main.MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,9 +39,6 @@
         <activity android:name=".usda.UsdaActivity"
             android:label="USDA database"
             android:screenOrientation="portrait" />
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="e547ebd59281ce61b52dc737b1e7c3cdb298eba1" />
     </application>
 
 </manifest>
